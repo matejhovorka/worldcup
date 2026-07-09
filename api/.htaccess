@@ -1,0 +1,15 @@
+Options -Indexes
+
+# Protect api/config.php from direct access
+<Files "config.php">
+  Order Allow,Deny
+  Deny from all
+</Files>
+
+# Force UTF-8
+AddDefaultCharset UTF-8
+
+# PHP session cookies: secure defaults (uncomment on HTTPS)
+# php_value session.cookie_secure 1
+# php_value session.cookie_httponly 1
+# php_value session.cookie_samesite Strict

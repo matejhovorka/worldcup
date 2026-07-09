@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | MS 2026 Tipovačka</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+    .admin-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem; gap: 1rem;
+    }
+    .admin-header h1 { font-size: 1.3rem; font-weight: 700; margin: 0; }
+    .admin-badge {
+      background: rgba(239,68,68,0.15); color: #f87171;
+      border: 1px solid rgba(239,68,68,0.3);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+
+    .match-admin-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--border-radius-md);
+      padding: 1rem 1.25rem;
+      margin-bottom: 0.75rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .match-admin-card.done { opacity: 0.6; border-color: rgba(34,197,94,0.3); }
+
+    .match-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+    .match-teams-label { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); }
+
+    .result-form { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .result-input {
+      width: 52px;
+      padding: 0.4rem 0.5rem;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--border-radius-sm);
+      color: var(--input-text);
+      font-family: inherit; font-size: 1rem; font-weight: 600;
+      text-align: center;
+      -moz-appearance: textfield;
+    }
+    .result-input::-webkit-outer-spin-button,
+    .result-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+    .result-input:focus { outline: none; border-color: var(--accent); }
+
+    .btn-save-result {
+      padding: 0.45rem 0.9rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius-sm);
+      font-family: inherit; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn-save-result:hover { opacity: 0.85; }
+    .btn-save-result:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .result-badge {
+      font-size: 0.85rem; font-weight: 700;
+      color: #4ade80;
+      white-space: nowrap;
+    }
+
+    .status-select {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--border-radius-sm);
+      color: var(--text-secondary);
+      font-family: inherit; font-size: 0.78rem;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .group-heading {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--text-muted); text-transform: uppercase;
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .stats-bar {
+      display: flex; gap: 1.5rem;
+      background: var(--bg-card); border: 1px solid var(--border-card);
+      border-radius: var(--border-radius-md); padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .stat { text-align: center; }
+    .stat-val { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .stat-lbl { font-size: 0.72rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<div class="admin-container">
+  <div class="admin-header">
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+      <h1>⚽ Admin Panel</h1>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <a href="./" style="font-size:0.85rem;color:var(--text-secondary);text-decoration:none;">← Zpět na app</a>
+      <button onclick="doLogout()" style="background:none;border:1px solid var(--border-card);border-radius:var(--border-radius-sm);color:var(--text-muted);padding:0.35rem 0.75rem;cursor:pointer;font-family:inherit;font-size:0.8rem;">Odhlásit</button>
+    </div>
+  </div>
+
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Zápasů celkem</div></div>
+    <div class="stat"><div class="stat-val" id="stat-done">—</div><div class="stat-lbl">Uzavřeno (FT)</div></div>
+    <div class="stat"><div class="stat-val" id="stat-pending">—</div><div class="stat-lbl">Zbývá</div></div>
+  </div>
+
+  <div id="matches-list">
+    <div style="text-align:center;padding:3rem;color:var(--text-muted);">Načítám zápasy…</div>
+  </div>
+</div>
+
+<div id="toast" class="toast"><span id="toast-message"></span></div>
+
+<script>
+  let allMatches = [];
+
+  // Auth check
+  fetch('api/auth.php?action=me', { credentials: 'include', cache: 'no-store' })
+    .then(r => r.json())
+    .then(d => {
+      if (!d.user)           { window.location.href = 'login'; return; }
+      if (!d.user.is_admin)  { alert('Nemáte přístup do admin panelu.'); window.location.href = './'; return; }
+      loadMatches();
+    })
+    .catch(() => window.location.href = 'login');
+
+  function doLogout() {
+    fetch('api/auth.php?action=logout', { method: 'POST', credentials: 'include' })
+      .finally(() => window.location.href = 'login');
+  }
+
+  async function loadMatches() {
+    const res  = await fetch('api/admin.php', { credentials: 'include', cache: 'no-store' });
+    const data = await res.json();
+    allMatches = data.matches || [];
+    renderMatches();
+    updateStats();
+  }
+
+  function updateStats() {
+    const total   = allMatches.length;
+    const done    = allMatches.filter(m => m.status === 'FT').length;
+    document.getElementById('stat-total').textContent   = total;
+    document.getElementById('stat-done').textContent    = done;
+    document.getElementById('stat-pending').textContent = total - done;
+  }
+
+  function renderMatches() {
+    const container = document.getElementById('matches-list');
+    container.innerHTML = '';
+
+    // Group by group_letter
+    const groups = {};
+    allMatches.forEach(m => {
+      if (!groups[m.group_letter]) groups[m.group_letter] = [];
+      groups[m.group_letter].push(m);
+    });
+
+    const stageNames = {
+      'R': 'Šestnáctifinále (Round of 32)',
+      'O': 'Osmifinále (Round of 16)',
+      'Q': 'Čtvrtfinále (Quarter-finals)',
+      'S': 'Semifinále (Semi-finals)',
+      '3': 'O 3. místo (Third place play-off)',
+      'N': 'Finále (Final)'
+    };
+
+    const sortedGroups = Object.keys(groups).sort((a, b) => {
+      const order = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'R', 'O', 'Q', 'S', '3', 'N'];
+      return order.indexOf(a) - order.indexOf(b);
+    });
+
+    sortedGroups.forEach(grp => {
+      const heading = document.createElement('div');
+      heading.className = 'group-heading';
+      heading.textContent = stageNames[grp] || `Skupina ${grp}`;
+      container.appendChild(heading);
+
+      groups[grp].forEach(m => {
+        const isDone = m.status === 'FT';
+        const isLive = m.status === 'LIVE';
+        const card = document.createElement('div');
+        card.className = `match-admin-card ${isDone ? 'done' : ''}`;
+        if (isLive) {
+          card.style.borderColor = 'rgba(239, 68, 68, 0.45)';
+          card.style.background = 'linear-gradient(to right, rgba(239, 68, 68, 0.02), transparent)';
+        }
+        card.id = `card-${m.id}`;
+        card.innerHTML = `
+          <div>
+            <div class="match-meta">
+              <span id="meta-text-${m.id}">#${m.id} · ${escapeHtml(m.match_date)} ${escapeHtml(m.time_cest.substring(0, 5))} · ${escapeHtml(m.city)}</span>
+              <button onclick="toggleEditTime(${m.id})" style="background:none;border:none;cursor:pointer;padding:0;margin-left:0.5rem;font-size:0.8rem;color:var(--text-muted);vertical-align:middle;" title="Upravit datum a čas">✏️</button>
+              <div id="edit-time-form-${m.id}" style="display:none;margin-top:0.4rem;align-items:center;gap:0.4rem;">
+                <input type="date" id="input-date-${m.id}" value="${escapeHtml(m.match_date)}" class="status-select" style="font-size:0.78rem;padding:0.25rem;">
+                <input type="time" id="input-time-${m.id}" value="${escapeHtml(m.time_cest.substring(0, 5))}" class="status-select" style="font-size:0.78rem;padding:0.25rem;">
+                <button onclick="saveTime(${m.id})" class="btn-save-result" style="padding:0.25rem 0.5rem;font-size:0.75rem;">Uložit</button>
+                <button onclick="toggleEditTime(${m.id})" style="padding:0.25rem 0.5rem;font-size:0.75rem;border:1px solid var(--border-card);background:none;color:var(--text-muted);border-radius:var(--border-radius-sm);cursor:pointer;">Zrušit</button>
+              </div>
+            </div>
+            <div class="match-teams-label">${escapeHtml(m.home_team)} vs ${escapeHtml(m.away_team)}</div>
+          </div>
+          <div class="result-form">
+            <select class="status-select" id="status-${m.id}" onchange="updateMatchStatus(${m.id}, this.value)">
+              <option value="NS" ${m.status === 'NS' ? 'selected' : ''}>Naplánován</option>
+              <option value="LIVE" ${m.status === 'LIVE' ? 'selected' : ''}>LIVE</option>
+              <option value="FT" ${m.status === 'FT' ? 'selected' : ''}>Konec (FT)</option>
+            </select>
+            <input type="number" min="0" max="30" class="result-input" id="rh-${m.id}" value="${m.result_home !== null ? m.result_home : ''}" placeholder="0">
+            <span style="color:var(--text-muted);font-weight:700">–</span>
+            <input type="number" min="0" max="30" class="result-input" id="ra-${m.id}" value="${m.result_away !== null ? m.result_away : ''}" placeholder="0">
+            <button class="btn-save-result" onclick="saveResult(${m.id})">Uložit</button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    });
+  }
+
+  async function saveResult(matchId) {
+    const home = document.getElementById(`rh-${matchId}`)?.value;
+    const away = document.getElementById(`ra-${matchId}`)?.value;
+    const status = document.getElementById(`status-${matchId}`)?.value || 'FT';
+    
+    if (home === '' || away === '') { showToast('Vyplňte oba výsledky!'); return; }
+
+    const btn = document.querySelector(`#card-${matchId} .btn-save-result`);
+    if (btn) { btn.disabled = true; btn.textContent = 'Ukládám…'; }
+
+    try {
+      const res  = await fetch('api/admin.php?action=result', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ match_id: matchId, result_home: parseInt(home), result_away: parseInt(away), status: status })
+      });
+      const data = await res.json();
+      if (data.error) { showToast(data.error); if (btn) { btn.disabled = false; btn.textContent = 'Uložit'; } }
+      else {
+        showToast(`Výsledek ${home}–${away} a status '${status}' uložen!`);
+        // Update local state
+        const m = allMatches.find(x => x.id == matchId);
+        if (m) { m.status = status; m.result_home = parseInt(home); m.result_away = parseInt(away); }
+        renderMatches();
+        updateStats();
+      }
+    } catch (e) {
+      showToast('Chyba při ukládání.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Uložit'; }
+    }
+  }
+
+  async function updateMatchStatus(matchId, newStatus) {
+    try {
+      const res  = await fetch('api/admin.php?action=setstatus', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ match_id: matchId, status: newStatus })
+      });
+      const data = await res.json();
+      if (data.error) { showToast(data.error); }
+      else {
+        showToast(`Status zápasu #${matchId} změněn na ${newStatus}`);
+        const m = allMatches.find(x => x.id == matchId);
+        if (m) {
+          m.status = newStatus;
+          if (newStatus === 'NS') {
+            m.result_home = null;
+            m.result_away = null;
+            // Clear inputs in DOM
+            const rh = document.getElementById(`rh-${matchId}`);
+            const ra = document.getElementById(`ra-${matchId}`);
+            if (rh) rh.value = '';
+            if (ra) ra.value = '';
+          }
+        }
+        renderMatches();
+        updateStats();
+      }
+    } catch (e) {
+      showToast('Chyba při změně statusu.');
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-message').textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function toggleEditTime(matchId) {
+    const form = document.getElementById(`edit-time-form-${matchId}`);
+    if (form) {
+      form.style.display = form.style.display === 'none' ? 'flex' : 'none';
+    }
+  }
+
+  async function saveTime(matchId) {
+    const dateVal = document.getElementById(`input-date-${matchId}`)?.value;
+    const timeVal = document.getElementById(`input-time-${matchId}`)?.value;
+
+    if (!dateVal || !timeVal) {
+      showToast('Vyplňte datum i čas!');
+      return;
+    }
+
+    const btn = document.querySelector(`#edit-time-form-${matchId} .btn-save-result`);
+    if (btn) { btn.disabled = true; btn.textContent = 'Ukládám…'; }
+
+    try {
+      const res = await fetch('api/admin.php?action=updatetime', {
+        method: 'POST', credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ match_id: matchId, match_date: dateVal, time_cest: timeVal })
+      });
+      const data = await res.json();
+      if (data.error) {
+        showToast(data.error);
+        if (btn) { btn.disabled = false; btn.textContent = 'Uložit'; }
+      } else {
+        showToast('Datum a čas zápasu úspěšně upraveny!');
+        const m = allMatches.find(x => x.id == matchId);
+        if (m) {
+          m.match_date = dateVal;
+          m.time_cest = timeVal + ":00";
+        }
+        renderMatches();
+      }
+    } catch (e) {
+      showToast('Chyba při ukládání času.');
+      if (btn) { btn.disabled = false; btn.textContent = 'Uložit'; }
+    }
+  }
+
+  function escapeHtml(str) {
+    if (typeof str !== 'string') return '';
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;")
+      .replace(/`/g, "&#96;");
+  }
+</script>
+</body>
+</html>

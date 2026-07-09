@@ -1,0 +1,322 @@
+[
+  {
+    "match_id": 73,
+    "group": "R",
+    "home_team": "South Africa",
+    "away_team": "Canada",
+    "date": "2026-06-28",
+    "time_cest": "19:00",
+    "venue": "Los Angeles Stadium",
+    "city": "Los Angeles"
+  },
+  {
+    "match_id": 74,
+    "group": "R",
+    "home_team": "Germany",
+    "away_team": "Paraguay",
+    "date": "2026-06-29",
+    "time_cest": "20:30",
+    "venue": "Boston Stadium",
+    "city": "Foxborough"
+  },
+  {
+    "match_id": 75,
+    "group": "R",
+    "home_team": "Netherlands",
+    "away_team": "Morocco",
+    "date": "2026-06-30",
+    "time_cest": "01:00",
+    "venue": "Estadio Monterrey",
+    "city": "Guadalupe"
+  },
+  {
+    "match_id": 76,
+    "group": "R",
+    "home_team": "Brazil",
+    "away_team": "Japan",
+    "date": "2026-06-29",
+    "time_cest": "17:00",
+    "venue": "Houston Stadium",
+    "city": "Houston"
+  },
+  {
+    "match_id": 77,
+    "group": "R",
+    "home_team": "France",
+    "away_team": "Sweden",
+    "date": "2026-06-30",
+    "time_cest": "21:00",
+    "venue": "New York New Jersey Stadium",
+    "city": "East Rutherford"
+  },
+  {
+    "match_id": 78,
+    "group": "R",
+    "home_team": "Ivory Coast",
+    "away_team": "Norway",
+    "date": "2026-06-30",
+    "time_cest": "17:00",
+    "venue": "Dallas Stadium",
+    "city": "Arlington"
+  },
+  {
+    "match_id": 79,
+    "group": "R",
+    "home_team": "Mexico",
+    "away_team": "Ecuador",
+    "date": "2026-07-01",
+    "time_cest": "01:00",
+    "venue": "Mexico City Stadium",
+    "city": "Mexico City"
+  },
+  {
+    "match_id": 80,
+    "group": "R",
+    "home_team": "England",
+    "away_team": "DR Congo",
+    "date": "2026-07-01",
+    "time_cest": "16:00",
+    "venue": "Atlanta Stadium",
+    "city": "Atlanta"
+  },
+  {
+    "match_id": 81,
+    "group": "R",
+    "home_team": "United States",
+    "away_team": "Bosnia and Herzegovina",
+    "date": "2026-07-02",
+    "time_cest": "00:00",
+    "venue": "San Francisco Bay Area Stadium",
+    "city": "San Francisco"
+  },
+  {
+    "match_id": 82,
+    "group": "R",
+    "home_team": "Belgium",
+    "away_team": "Senegal",
+    "date": "2026-07-01",
+    "time_cest": "20:00",
+    "venue": "Seattle Stadium",
+    "city": "Seattle"
+  },
+  {
+    "match_id": 83,
+    "group": "R",
+    "home_team": "Portugal",
+    "away_team": "Croatia",
+    "date": "2026-07-02",
+    "time_cest": "23:00",
+    "venue": "Toronto Stadium",
+    "city": "Toronto"
+  },
+  {
+    "match_id": 84,
+    "group": "R",
+    "home_team": "Spain",
+    "away_team": "Austria",
+    "date": "2026-07-02",
+    "time_cest": "19:00",
+    "venue": "Los Angeles Stadium",
+    "city": "Los Angeles"
+  },
+  {
+    "match_id": 85,
+    "group": "R",
+    "home_team": "Switzerland",
+    "away_team": "Algeria",
+    "date": "2026-07-03",
+    "time_cest": "03:00",
+    "venue": "BC Place",
+    "city": "Vancouver"
+  },
+  {
+    "match_id": 86,
+    "group": "R",
+    "home_team": "Argentina",
+    "away_team": "Cabo Verde",
+    "date": "2026-07-03",
+    "time_cest": "22:00",
+    "venue": "Miami Stadium",
+    "city": "Miami Gardens"
+  },
+  {
+    "match_id": 87,
+    "group": "R",
+    "home_team": "Colombia",
+    "away_team": "Ghana",
+    "date": "2026-07-04",
+    "time_cest": "01:30",
+    "venue": "Kansas City Stadium",
+    "city": "Kansas City"
+  },
+  {
+    "match_id": 88,
+    "group": "R",
+    "home_team": "Australia",
+    "away_team": "Egypt",
+    "date": "2026-07-03",
+    "time_cest": "18:00",
+    "venue": "Dallas Stadium",
+    "city": "Arlington"
+  },
+  {
+    "match_id": 89,
+    "group": "O",
+    "home_team": "Winner Match 74",
+    "away_team": "Winner Match 77",
+    "date": "2026-07-04",
+    "time_cest": "21:00",
+    "venue": "Philadelphia Stadium",
+    "city": "Philadelphia"
+  },
+  {
+    "match_id": 90,
+    "group": "O",
+    "home_team": "Winner Match 73",
+    "away_team": "Winner Match 75",
+    "date": "2026-07-04",
+    "time_cest": "17:00",
+    "venue": "Houston Stadium",
+    "city": "Houston"
+  },
+  {
+    "match_id": 91,
+    "group": "O",
+    "home_team": "Winner Match 76",
+    "away_team": "Winner Match 78",
+    "date": "2026-07-05",
+    "time_cest": "20:00",
+    "venue": "New York New Jersey Stadium",
+    "city": "East Rutherford"
+  },
+  {
+    "match_id": 92,
+    "group": "O",
+    "home_team": "Winner Match 79",
+    "away_team": "Winner Match 80",
+    "date": "2026-07-06",
+    "time_cest": "00:00",
+    "venue": "Mexico City Stadium",
+    "city": "Mexico City"
+  },
+  {
+    "match_id": 93,
+    "group": "O",
+    "home_team": "Winner Match 83",
+    "away_team": "Winner Match 84",
+    "date": "2026-07-06",
+    "time_cest": "19:00",
+    "venue": "Dallas Stadium",
+    "city": "Arlington"
+  },
+  {
+    "match_id": 94,
+    "group": "O",
+    "home_team": "Winner Match 81",
+    "away_team": "Winner Match 82",
+    "date": "2026-07-07",
+    "time_cest": "00:00",
+    "venue": "Seattle Stadium",
+    "city": "Seattle"
+  },
+  {
+    "match_id": 95,
+    "group": "O",
+    "home_team": "Winner Match 86",
+    "away_team": "Winner Match 88",
+    "date": "2026-07-07",
+    "time_cest": "16:00",
+    "venue": "Atlanta Stadium",
+    "city": "Atlanta"
+  },
+  {
+    "match_id": 96,
+    "group": "O",
+    "home_team": "Winner Match 85",
+    "away_team": "Winner Match 87",
+    "date": "2026-07-07",
+    "time_cest": "20:00",
+    "venue": "BC Place",
+    "city": "Vancouver"
+  },
+  {
+    "match_id": 97,
+    "group": "Q",
+    "home_team": "Winner Match 89",
+    "away_team": "Winner Match 90",
+    "date": "2026-07-09",
+    "time_cest": "20:00",
+    "venue": "Boston Stadium",
+    "city": "Foxborough"
+  },
+  {
+    "match_id": 98,
+    "group": "Q",
+    "home_team": "Winner Match 93",
+    "away_team": "Winner Match 94",
+    "date": "2026-07-10",
+    "time_cest": "19:00",
+    "venue": "Los Angeles Stadium",
+    "city": "Los Angeles"
+  },
+  {
+    "match_id": 99,
+    "group": "Q",
+    "home_team": "Winner Match 91",
+    "away_team": "Winner Match 92",
+    "date": "2026-07-11",
+    "time_cest": "21:00",
+    "venue": "Miami Stadium",
+    "city": "Miami Gardens"
+  },
+  {
+    "match_id": 100,
+    "group": "Q",
+    "home_team": "Winner Match 95",
+    "away_team": "Winner Match 96",
+    "date": "2026-07-12",
+    "time_cest": "01:00",
+    "venue": "Kansas City Stadium",
+    "city": "Kansas City"
+  },
+  {
+    "match_id": 101,
+    "group": "S",
+    "home_team": "Winner Match 97",
+    "away_team": "Winner Match 98",
+    "date": "2026-07-14",
+    "time_cest": "19:00",
+    "venue": "Dallas Stadium",
+    "city": "Arlington"
+  },
+  {
+    "match_id": 102,
+    "group": "S",
+    "home_team": "Winner Match 99",
+    "away_team": "Winner Match 100",
+    "date": "2026-07-15",
+    "time_cest": "19:00",
+    "venue": "Atlanta Stadium",
+    "city": "Atlanta"
+  },
+  {
+    "match_id": 103,
+    "group": "3",
+    "home_team": "Loser Match 101",
+    "away_team": "Loser Match 102",
+    "date": "2026-07-18",
+    "time_cest": "21:00",
+    "venue": "Hard Rock Stadium",
+    "city": "Miami"
+  },
+  {
+    "match_id": 104,
+    "group": "N",
+    "home_team": "Winner Match 101",
+    "away_team": "Winner Match 102",
+    "date": "2026-07-19",
+    "time_cest": "19:00",
+    "venue": "MetLife Stadium",
+    "city": "New York / New Jersey"
+  }
+]
